@@ -54,7 +54,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /* 0 */
 /***/ function(module, exports) {
 
-	"use strict";
+	'use strict';
 
 	Object.defineProperty(exports, "__esModule", {
 	  value: true
@@ -72,16 +72,28 @@ return /******/ (function(modules) { // webpackBootstrap
 	  }
 
 	  _createClass(_class, [{
-	    key: "addListener",
-	    value: function addListener(label, callback) {
+	    key: 'isFunction',
+	    value: function isFunction(type) {
+	      return !!(Object.prototype.toString.call(type) === '[object Function]');
+	    }
+	  }, {
+	    key: 'addEventListener',
+	    value: function addEventListener(label, callback) {
 	      if (!this.listeners.has(label)) {
 	        this.listeners.set(label, []);
 	      }
 
 	      this.listeners.get(label).push(callback);
+
+	      return true;
 	    }
 	  }, {
-	    key: "emit",
+	    key: 'on',
+	    value: function on(label, callback) {
+	      return addEventListener(label, callback);
+	    }
+	  }, {
+	    key: 'emit',
 	    value: function emit(label) {
 	      for (var _len = arguments.length, args = Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
 	        args[_key - 1] = arguments[_key];
@@ -99,74 +111,32 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	      return false;
 	    }
+	  }, {
+	    key: 'removeListener',
+	    value: function removeListener(label, callback) {
+	      var _this = this;
+
+	      var listeners = this.listeners.get(label),
+	          index = void 0;
+
+	      if (listeners && listeners.length) {
+	        index = listeners.reduce(function (i, listener, index) {
+	          return _this.isFunction(listener) && listener === callback ? i = index : i;
+	        }, -1);
+
+	        if (index > -1) {
+	          listeners.splice(index, 1);
+	          this.listeners.set(label, listeners);
+	          return true;
+	        }
+	      }
+
+	      return false;
+	    }
 	  }]);
 
 	  return _class;
 	}();
-
-	/*
-	var keyString = "a string",
-	    keyObj = {},
-	    keyFunc = function () {};
-
-	// setting the values
-	myMap.set(keyString, "value associated with 'a string'");
-	myMap.set(keyObj, "value associated with keyObj");
-	myMap.set(keyFunc, "value associated with keyFunc");
-
-	myMap.size; // 3
-
-	// getting the values
-	myMap.get(keyString);    // "value associated with 'a string'"
-	myMap.get(keyObj);       // "value associated with keyObj"
-	export default class {
-	  constructor () {
-	    this.listeners = new Map();
-	  }
-
-	  isFunction (type) {
-	    return !!(Object.prototype.toString.call(type) === '[object Function]');
-	  }
-
-	  addListener (label, callback) {
-	    this.listeners.has(label) || this.listeners.set(label, []);
-	    this.listeners.get(label).push(callback);
-	  }
-
-	  removeListener (label, callback) {
-	    let listeners = this.listeners.get(label),
-	      index;
-
-	    if (listeners && listeners.length) {
-	      index = listeners.reduce((i, listener, index) => {
-	        return (this.isFunction(listener) && listener === callback) ? i = index : i;
-	      }, -1);
-
-	      if (index > -1) {
-	        listeners.splice(index, 1);
-	        this.listeners.set(label, listeners);
-	        return true;
-	      }
-	    }
-
-	    return false;
-	  }
-
-	  emit (label, ...args) {
-	    let listeners = this.listeners.get(label);
-
-	    if (listeners && listeners.length) {
-	      listeners.forEach((listener) => {
-	        listener(...args);
-	      });
-
-	      return true;
-	    }
-
-	    return false;
-	  }
-	}*/
-
 
 	exports.default = _class;
 
