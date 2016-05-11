@@ -1,15 +1,36 @@
 export default class {
-  constructor () {
-    this.listeners = new Map();
-  }
+  listeners = new Map();
 
   isFunction (type) {
     return !!(Object.prototype.toString.call(type) === '[object Function]');
   }
 
-  addListener (label, callback) {
-    this.listeners.has(label) || this.listeners.set(label, []);
+  addEventListener (label, callback) {
+    if (!this.listeners.has(label)) {
+      this.listeners.set(label, []);
+    }
+
     this.listeners.get(label).push(callback);
+
+    return true;
+  }
+
+  on (label, callback) {
+    return addEventListener(label, callback);
+  }
+
+  emit (label, ...args) {
+    const listeners = this.listeners.get(label);
+
+    if (listeners && listeners.length) {
+      listeners.forEach((listener) => {
+        listener(...args);
+      });
+
+      return true;
+    }
+
+    return false;
   }
 
   removeListener (label, callback) {
@@ -26,20 +47,6 @@ export default class {
         this.listeners.set(label, listeners);
         return true;
       }
-    }
-
-    return false;
-  }
-
-  emit (label, ...args) {
-    let listeners = this.listeners.get(label);
-
-    if (listeners && listeners.length) {
-      listeners.forEach((listener) => {
-        listener(...args);
-      });
-
-      return true;
     }
 
     return false;
