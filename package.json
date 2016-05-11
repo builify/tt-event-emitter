@@ -4,10 +4,10 @@
   "description": "",
   "main": "dist/index.js",
   "scripts": {
-    "precommit": "npm run test && npm run build",
+    "precommit": "npm test && npm run build",
     "build": "rimraf dist && webpack --no-minimize && webpack",
     "test": "mocha --compilers js:babel-register --recursive --bail",
-    "tdd": "npm run test-server -- --watch"
+    "tdd": "npm run test -- --watch"
   },
   "engines": {
     "node": ">=6.1.0",
