@@ -23,10 +23,15 @@ observable.on('sayhello', () => {
 });
 
 // Say 'Hello!' in every 5 seconds.
-window.setInterval(() => {
+const helloCycle = window.setInterval(() => {
   observable.emit('sayhello');
 }, 5000);
 
+// Remove 'sayhello' listener after 20 seconds.
+window.setTimeout(() => {
+  observable.removeListener('sayhello');
+  window.clearInterval(helloCycle);
+}, 20000);
 ```
 
 ## Contributions & Issues
