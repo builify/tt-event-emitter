@@ -2,7 +2,7 @@
   "name": "tt-event-emitter",
   "version": "1.0.0",
   "description": "README.md",
-  "main": "dist/index.js",
+  "main": "dist/tt-event-emitter.js",
   "scripts": {
     "precommit": "npm test && npm run build && npm run coveralls",
     "build": "rimraf dist && webpack --no-minimize && webpack",

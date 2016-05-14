@@ -55,4 +55,13 @@ export default class {
   off (label, callback) {
     return this.removeListener(label, callback);
   }
+
+  deleteListener (label) {
+    if (this.listeners.has(label)) {
+      this.listeners.delete(label);
+      return true;
+    }
+
+    return false;
+  }
 }

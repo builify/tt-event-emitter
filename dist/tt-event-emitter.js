@@ -77,8 +77,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	      return !!(Object.prototype.toString.call(type) === '[object Function]');
 	    }
 	  }, {
-	    key: 'addEventListener',
-	    value: function addEventListener(label, callback) {
+	    key: 'addListener',
+	    value: function addListener(label, callback) {
 	      if (!this.listeners.has(label)) {
 	        this.listeners.set(label, []);
 	      }
@@ -90,7 +90,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	  }, {
 	    key: 'on',
 	    value: function on(label, callback) {
-	      return addEventListener(label, callback);
+	      return this.addListener(label, callback);
 	    }
 	  }, {
 	    key: 'emit',
@@ -129,6 +129,21 @@ return /******/ (function(modules) { // webpackBootstrap
 	          this.listeners.set(label, listeners);
 	          return true;
 	        }
+	      }
+
+	      return false;
+	    }
+	  }, {
+	    key: 'off',
+	    value: function off(label, callback) {
+	      return this.removeListener(label, callback);
+	    }
+	  }, {
+	    key: 'deleteListener',
+	    value: function deleteListener(label) {
+	      if (this.listeners.has(label)) {
+	        this.listeners.delete(label);
+	        return true;
 	      }
 
 	      return false;
