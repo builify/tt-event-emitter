@@ -5,7 +5,7 @@ export default class {
     return !!(Object.prototype.toString.call(type) === '[object Function]');
   }
 
-  addEventListener (label, callback) {
+  addListener (label, callback) {
     if (!this.listeners.has(label)) {
       this.listeners.set(label, []);
     }
@@ -16,7 +16,7 @@ export default class {
   }
 
   on (label, callback) {
-    return addEventListener(label, callback);
+    return this.addListener(label, callback);
   }
 
   emit (label, ...args) {
@@ -50,5 +50,9 @@ export default class {
     }
 
     return false;
+  }
+
+  off (label, callback) {
+    return this.removeListener(label, callback);
   }
 }

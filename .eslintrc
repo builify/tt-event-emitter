@@ -21,7 +21,7 @@
     "no-use-before-define": [2, "nofunc"],
     "object-curly-spacing": [1, "always"],
     "semi": [2, "always"],
-    "keyword-spacing": ["error", {before: true, after: true}],
+    "keyword-spacing": [2, {before: true, after: true}],
     "space-unary-ops": 2
   },
   "env": {

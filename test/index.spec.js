@@ -34,11 +34,11 @@ describe('TTEventEmitter', () => {
 
   describe('addEventListener', () => {
     it('is a function', () => {
-      expect(eventEmitter.addEventListener, 'to be a', 'function');
+      expect(eventEmitter.addListener, 'to be a', 'function');
     });
 
     it('should add label to listeners', () => {
-      eventEmitter.addEventListener('test', () => {
+      eventEmitter.addListener('test', () => {
         console.log('Hello');
       });
 
