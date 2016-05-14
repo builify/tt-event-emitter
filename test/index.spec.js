@@ -6,6 +6,9 @@ describe('TTEventEmitter', () => {
   const testFunction = (number) => {
     return number;
   };
+  const otherTestFunction = (word) => {
+    return word
+  };
 
   it('should be defined', () => {
     expect(eventEmitter, 'to be defined');
@@ -51,6 +54,22 @@ describe('TTEventEmitter', () => {
     });
   });
 
+  describe('on', () => {
+    it('is a function', () => {
+      expect(eventEmitter.on, 'to be a', 'function');
+    });
+
+    it('should add label to listeners', () => {
+      eventEmitter.on('othertest', otherTestFunction);
+
+      expect(eventEmitter.listeners.has('othertest'), 'to be', true);
+      expect(eventEmitter.listeners.get('othertest'), 'to be a', 'array');
+      expect(eventEmitter.listeners.get('othertest'), 'to contain', otherTestFunction);
+      expect(eventEmitter.listeners.get('othertest'), 'to have length', 1);
+      expect(eventEmitter.emit('othertest', 'bilder'), 'to be', true);
+    });
+  });
+
   describe('removeListener', () => {
     it('is a function', () => {
       expect(eventEmitter.removeListener, 'to be a', 'function');
@@ -64,6 +83,21 @@ describe('TTEventEmitter', () => {
       expect(eventEmitter.listeners.get('test'), 'to have length', 0);
     });
   });
+
+  describe('off', () => {
+    it('is a function', () => {
+      expect(eventEmitter.off, 'to be a', 'function');
+    });
+
+    it('should remove listeners', () => {
+      eventEmitter.off('othertest', otherTestFunction);
+
+      expect(eventEmitter.listeners.get('othertest'), 'to be a', 'array');
+      expect(eventEmitter.listeners.get('othertest'), 'to be empty');
+      expect(eventEmitter.listeners.get('othertest'), 'to have length', 0);
+    });
+  });
+
   describe('deleteListener', () => {
     it('is a function', () => {
       expect(eventEmitter.deleteListener, 'to be a', 'function');
@@ -74,6 +108,12 @@ describe('TTEventEmitter', () => {
 
       expect(eventEmitter.listeners.has('test'), 'to be', false);
       expect(eventEmitter.listeners.get('test'), 'to be', undefined);
+    });
+  });
+
+  describe('emit', () => {
+    it('is a function', () => {
+      expect(eventEmitter.emit, 'to be a', 'function');
     });
   });
 });

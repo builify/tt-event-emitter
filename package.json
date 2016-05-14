@@ -4,7 +4,7 @@
   "description": "README.md",
   "main": "dist/tt-event-emitter.js",
   "scripts": {
-    "precommit": "npm test && npm run build && npm run coveralls",
+    "precommit": "npm test && npm run build",
     "build": "rimraf dist && webpack --no-minimize && webpack",
     "test": "mocha --compilers js:babel-register --recursive --bail",
     "tdd": "npm run test -- --watch",
